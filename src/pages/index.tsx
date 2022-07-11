@@ -44,6 +44,9 @@ export default function Home() {
             {isLoggedIn && (
                 <>
                     <div className="flex flex-col justify-center max-w-2xl mx-auto mb-16">
+                        <h1 className="mb-4 text-3xl text-center font-bold tracking-tight text-black text-cyan-500">
+                            Search Movie
+                        </h1>
                         <div className="w-96">
                             <input
                                 required
