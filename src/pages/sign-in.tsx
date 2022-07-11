@@ -1,9 +1,12 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Container from '../components/Container';
+import { useAppDispatch } from '../store/hooks';
+import { signIn } from '../store/reducers/user';
 
 export default function SignIn() {
     const router = useRouter();
+    const dispatch = useAppDispatch();
     const [credentials, setCredentials] = useState({ userName: '', password: '' });
 
     function handleSignIn() {
@@ -19,10 +22,7 @@ export default function SignIn() {
             return;
         }
 
-        localStorage.setItem(
-            'logged-in',
-            JSON.stringify({ loggedIn: true, name: credentials.userName })
-        );
+        dispatch(signIn(credentials.userName.toLowerCase()));
         return router.push('/');
     }
 

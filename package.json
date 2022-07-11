@@ -10,15 +10,18 @@
     "start": "next start"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.3",
     "next": "latest",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-redux": "^8.0.2"
   },
   "devDependencies": {
     "@types/node": "18.0.0",
     "@types/prettier": "^2",
     "@types/react": "18.0.15",
     "@types/react-dom": "18.0.6",
+    "@types/react-redux": "^7.1.24",
     "autoprefixer": "^10.4.7",
     "eslint": "^8.19.0",
     "eslint-config-next": "^12.2.2",

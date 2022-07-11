@@ -1,23 +1,29 @@
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useAppDispatch } from '../store/hooks';
+import { setUsers, signIn } from '../store/reducers/user';
 import Navbar from './Navbar';
 
 export default function Container(props: any) {
     const { children, ...customMeta } = props;
-    const [loggedUser, setLoggedUser] = useState({ loggedIn: false, name: '' });
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         const users = localStorage.getItem('users');
-        if (!users) localStorage.setItem('users', JSON.stringify({}));
+        if (!users) return localStorage.setItem('users', JSON.stringify({}));
+        dispatch(setUsers(JSON.parse(users)));
+    }, [dispatch]);
 
+    useEffect(() => {
         const cachedUser = JSON.parse(
             localStorage.getItem('logged-in') || '{"loggedIn": false, "name": ""}'
         ) as {
             loggedIn: boolean;
             name: string;
         };
-        setLoggedUser(() => cachedUser);
-    }, []);
+
+        if (cachedUser.loggedIn) dispatch(signIn(cachedUser.name));
+    }, [dispatch]);
 
     const meta = {
         title: 'Wolkus Technology - Assignment',
@@ -35,7 +41,7 @@ export default function Container(props: any) {
             </Head>
             <div className="flex flex-col justify-center px-8">
                 <div className="ml-[-0.60rem]">
-                    <Navbar loggedUser={loggedUser} />
+                    <Navbar />
                 </div>
             </div>
             <main className="flex flex-col justify-center px-8 bg-gray-900">{children}</main>

@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Container from '../components/Container';
+import { useAppDispatch } from '../store/hooks';
+import { signUp } from '../store/reducers/user';
 
 export default function SignUp() {
     const router = useRouter();
+    const dispatch = useAppDispatch();
     const [credentials, setCredentials] = useState({ userName: '', password: '' });
 
     function handleSignUp() {
@@ -14,14 +17,7 @@ export default function SignUp() {
             return;
         }
 
-        currentUsers[credentials.userName.toLowerCase()] = credentials.password;
-        localStorage.setItem('users', JSON.stringify(currentUsers));
-        localStorage.setItem(
-            'logged-in',
-            JSON.stringify({ loggedIn: true, name: credentials.userName })
-        );
-
-        alert('Successfully created your account. Please click on ok to go to homepage');
+        dispatch(signUp({ userName: credentials.userName, password: credentials.password }));
         return router.push('/');
     }
 
