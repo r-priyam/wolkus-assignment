@@ -8,8 +8,10 @@ export default function Home() {
     const isLoggedIn = useAppSelector(loggedIn);
     const [searchName, setSearchName] = useState('');
     const [movieData, setMovieData] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     async function searchMovie() {
+        setLoading(true);
         const baseUrl = `https://www.omdbapi.com/?s=${searchName}&type=movie&apikey=${process.env.NEXT_PUBLIC_OMDB_API_KEY}`;
         const response = await fetch(baseUrl);
         const data = await response.json();
@@ -21,6 +23,7 @@ export default function Home() {
 
         setMovieData(data['Search']);
         setSearchName('');
+        setLoading(false);
     }
 
     return (
@@ -52,25 +55,32 @@ export default function Home() {
                             Search Movie
                         </button>
                     </div>
-                    <div className="flex flex-wrap justify-around">
-                        {movieData?.length &&
-                            movieData.map((data, index) => (
-                                <div
-                                    className="w-48 bg-gray-500 hover:bg-gray-600 p-3 rounded-md mt-2"
-                                    key={index}>
-                                    <Image
-                                        src={data['Poster']}
-                                        alt={data['Title']}
-                                        height={200}
-                                        width={170}
-                                        className="object-center"
-                                    />
-                                    <h3 className="text-gray-300 text-base font-bold">
-                                        {data['Title']}
-                                    </h3>
-                                </div>
-                            ))}
-                    </div>
+                    {loading && (
+                        <div className="flex flex-col justify-center items-start max-w-2xl mx-auto mb-16">
+                            <h1 className="text-green-400 text-2xl font-bold">Searching...</h1>
+                        </div>
+                    )}
+                    {!loading && (
+                        <div className="flex flex-wrap justify-around">
+                            {movieData?.length &&
+                                movieData.map((data, index) => (
+                                    <div
+                                        className="w-48 bg-gray-500 hover:bg-gray-600 p-3 rounded-md mt-2"
+                                        key={index}>
+                                        <Image
+                                            src={data['Poster']}
+                                            alt={data['Title']}
+                                            height={200}
+                                            width={170}
+                                            className="object-center"
+                                        />
+                                        <h3 className="text-gray-300 text-base font-bold">
+                                            {data['Title']}
+                                        </h3>
+                                    </div>
+                                ))}
+                        </div>
+                    )}
                 </>
             )}
         </Container>
