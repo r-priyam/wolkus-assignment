@@ -33,7 +33,7 @@ export default function Container(props: any) {
     };
 
     return (
-        <div className="bg-gray-900 min-h-screen">
+        <div className="bg-gray-900">
             <Head>
                 <title>{meta.title}</title>
                 <meta content={meta.description} name="description" />
