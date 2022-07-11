@@ -26,7 +26,7 @@ export default function Navbar() {
                         {isLoggedIn ? `Hello, ${name}!` : 'Hello'}
                     </h1>
                 </div>
-                <div className="flex items-center justify-center ">
+                <div className="flex items-center justify-center">
                     <button
                         aria-label="Sign In"
                         type="button"

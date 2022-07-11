@@ -40,3 +40,5 @@ yarn-error.log*
 # Yarn files
 .yarn/install-state.gz
 .yarn/build-state.yml
+
+.env
