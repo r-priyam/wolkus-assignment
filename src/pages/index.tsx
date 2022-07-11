@@ -9,15 +9,19 @@ export default function Home() {
     const [searchName, setSearchName] = useState('');
     const [movieData, setMovieData] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
 
     async function searchMovie() {
         setLoading(true);
+        setError(false);
+
         const baseUrl = `https://www.omdbapi.com/?s=${searchName}&type=movie&apikey=${process.env.NEXT_PUBLIC_OMDB_API_KEY}`;
         const response = await fetch(baseUrl);
         const data = await response.json();
 
         if (!data['Search']) {
-            alert('Something went wrong or no result found, please try again!');
+            setLoading(false);
+            setError(true);
             return;
         }
 
@@ -58,6 +62,13 @@ export default function Home() {
                     {loading && (
                         <div className="flex flex-col justify-center items-start max-w-2xl mx-auto mb-16">
                             <h1 className="text-green-400 text-2xl font-bold">Searching...</h1>
+                        </div>
+                    )}
+                    {error && (
+                        <div className="flex flex-col justify-center items-start max-w-2xl mx-auto mb-16">
+                            <h1 className="text-red-400 text-2xl font-bold">
+                                Something went wrong or no result found, please try again!
+                            </h1>
                         </div>
                     )}
                     {!loading && (
