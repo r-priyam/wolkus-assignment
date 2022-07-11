@@ -14,6 +14,7 @@ export default function Home() {
     async function searchMovie() {
         setLoading(true);
         setError(false);
+        setMovieData([]);
 
         const baseUrl = `https://www.omdbapi.com/?s=${searchName}&type=movie&apikey=${process.env.NEXT_PUBLIC_OMDB_API_KEY}`;
         const response = await fetch(baseUrl);
