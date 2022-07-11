@@ -8,7 +8,7 @@ export default function Navbar(props: { loggedUser: { loggedIn: boolean; name: s
     function handleSignInOrOut() {
         if (loggedIn) {
             localStorage.setItem('logged-in', JSON.stringify({ loggedIn: false, name: '' }));
-            return router.reload('/');
+            return router.reload();
         }
 
         return router.push('/sign-in');
